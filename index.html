@@ -2,8 +2,36 @@
 <html>
 <head>
 	<title>MouseBoxes</title>
+	<script src="js/jquery.js"></script>
+	<script>
+		$(document).ready(function(){
+			var bodyString = "";
+			var rows = 8;
+			var columns = 8;
+			for(var i = 0; i < rows; i++){
+				bodyString += "<div class=\"rowBox row-"+i+"\"></div>";
+				for(var j = 0; j < columns; j++){
+					bodyString += "<div class=\"mouseBox row-"+i+" col-"+j+"\"></div>";
+				}
+			} 
+			console.log(bodyString);
+			$("body").html(bodyString);
+
+
+		});
+
+	</script>
+	<style type="text/css">
+		.mouseBox {
+			width: 100px;
+			height: 20px;
+			margin: 20px;
+			background-color: yellow;
+		}
+
+	</style>
 </head>
 <body>
-	Hello World!
+	<div></div>
 </body>
 </html>
