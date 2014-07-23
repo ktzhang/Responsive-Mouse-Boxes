@@ -15,21 +15,66 @@
 				}
 				bodyString += "</div>";
 			} 
+
+			$(".row-2.col-6")
+
+			//Appending the string to the document
 			$("body").html(bodyString);
 
+			//Storing the information
+			var initialX = [];
+			var initialY = [];
+			$(".mouseBox").each(function(index) {
+				var offset = $(this).offset();
+				initialX[index] = offset.left;
+				initialY[index] = offset.top;
+			});
 
 			//Storing the objects
 			// for(var i = 0$(".mouseBox");
 			$(document).mousemove(function(e){
-				$(".mouseBox").each(function(){
+				$(".mouseBox").each(function(index){
+					if(e.pageX % 2 == 0) return;
 					var newX, newY;
-					var oldX = $(this).offset().left;
-					var oldY = $(this).offset().top;
-					newX = oldX - 10;
-					newY = oldY + 10;
-					console.log(newX + " " + newY);
+					var oldX = initialX[index];
+					var oldY = initialY[index];
+
+					var xDiff = oldX - e.pageX;
+					var yDiff = oldY - e.pageY;
+
+					//Squaring the numbers
+					xDiff *= xDiff;
+					yDiff *= yDiff;
+
+
+					//Getting
+					var xPos = 1;
+					if(xDiff < 0) {
+						xPos = -1;
+						xDiff *= -1;
+					}
+
+					var yPos = 1;
+					if(yPos < 0) {
+						yPos = -1;
+						yDiff *= -1;
+					}
+
+					var distX = Math.sqrt(xDiff);
+					var distY = Math.sqrt(yDiff);
+					// console.log(distX + " " + distY);
+
+					newX = oldX + (distX * xPos / 3);
+					newY = oldY + (distY * yPos / 3);
+
+					if($(this).is(".row-2.col-6")) {
+
+
+						console.log(newX + " " + newY);
+					}
+					// console.log(newX + " " + newY);
 					// $(this).css("position", "absolute");
-					$(this).offset({top: newY, left: newX});
+					// $(this).offset({top: newY, left: newX});
 				});
    			// e.pageX - gives you X position
    				// e.pageY - gives you Y position
@@ -48,6 +93,7 @@
 			margin: 10px;
 			float: left;
 			background-color: yellow;
+			border: solid 1px black;
 		}
 
 	</style>
