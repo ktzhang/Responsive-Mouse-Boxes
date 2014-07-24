@@ -5,72 +5,87 @@
 	<script src="js/jquery.js"></script>
 	<script>
 		$(document).ready(function(){
-			var bodyString = "";
-			var rows = 5;
-			var columns = 5;
-			var sideLen = 100;
-			for(var i = 0; i < rows; i++){
-				for(var j = 0; j < columns; j++){
-					bodyString += "<div class=\"mouseBox row-"+i+" col-"+j+"\"></div>";
-				}
-			} 
-
-
-			$(".row-2.col-6")
-
-			//Appending the string to the document
-			$("body").html(bodyString);
-			$(".mouseBox").css("height", sideLen).css("width", sideLen);
-
-			//Storing the information
-			var initialX = [];
-			var initialY = [];
-			$(".mouseBox").each(function(index) {
-				var offset = $(this).offset();
-				initialX[index] = offset.left;
-				initialY[index] = offset.top;
-			});
-
-			//Storing the objects
-			// for(var i = 0$(".mouseBox");
-			$(document).mousemove(function(e){
-				$(".mouseBox").each(function(index){
-					// if(e.pageX % 2 == 0) return;
-					// if(e.pageY % 2 == 0) return;
-
-					var newX, newY;
-					var radius = sideLen / 2;
-					var oldX = initialX[index] + radius;
-					var oldY = initialY[index] + radius;
-
-					var xDiff = oldX - e.pageX;
-					var yDiff = oldY - e.pageY;
+			var sideLen = 50;
 
 
 
-					//Getting the diff
-					var xPos = 1;
-					if(xDiff < 0) {
-						xPos = -1;
-						xDiff *= -1;
+			function resetLayout() {
+				var wrapperHeight = $(window).height()/2;
+				var wrapperWidth = $(window).width()/2;
+				var rows = Math.floor((wrapperHeight + sideLen/2) / sideLen);
+				var columns = Math.floor((wrapperWidth + sideLen/2) / sideLen);
+				console.log("row " + rows + " " + columns)
+				var bodyString = "";
+				for(var i = 0; i < rows; i++){
+					for(var j = 0; j < columns; j++){
+						bodyString += "<div class=\"mouseBox row-"+i+" col-"+j+"\"></div>";
 					}
+				} 
 
-					var yPos = 1;
-					if(yDiff < 0) {
-						yPos = -1;
-						yDiff *= -1;
-					}
+				//Appending the string to the document
+				$(".mouseBoxWrapper").html(bodyString).height(wrapperHeight).width(wrapperWidth);
+				$(".mouseBox").css("height", sideLen).css("width", sideLen);
 
-					var distX = Math.sqrt(xDiff);
-					var distY = Math.sqrt(yDiff);
+				//Storing the information
+				var initialX = [];
+				var initialY = [];
+				var radius = sideLen / 2;
 
-					newX = oldX + (distX* xPos) - radius;
-					newY = oldY + (distY* yPos) - radius;
-
-					$(this).offset({top: newY, left: newX});
+				$(".mouseBox").each(function(index) {
+					var offset = $(this).offset();
+					initialX[index] = offset.left + sideLen / 2;
+					initialY[index] = offset.top + sideLen / 2;
 				});
- 
-			});
+
+				$(".mouseBox").css("margin", 2);
+
+
+				//Binding mousemove events
+				var initial = true;
+				$(document).mousemove(function(e){
+					if(initial) {
+						$(".mouseBox").css("margin", 0);
+						initial = false;
+					}
+					$(".mouseBox").each(function(index){
+						var newX, newY;
+						var oldX = initialX[index];
+						var oldY = initialY[index];
+
+						var xDiff = oldX - e.pageX;
+						var yDiff = oldY - e.pageY;
+
+						//Getting the diff
+						var xPos = 1;
+						if(xDiff < 0) {
+							xPos = -1;
+							xDiff *= -1;
+						}
+
+						var yPos = 1;
+						if(yDiff < 0) {
+							yPos = -1;
+							yDiff *= -1;
+						}
+
+						var distX = Math.sqrt(xDiff);
+						var distY = Math.sqrt(yDiff);
+
+						newX = oldX + (distX* xPos) - radius;
+						newY = oldY + (distY* yPos) - radius;
+
+						$(this).offset({top: newY, left: newX});
+					});
+	 
+				});
+			}
+
+			resetLayout();
+
+	  		$(window).resize(function() {
+				resetLayout();
+		  	});			
+			
 
 		});
 
@@ -78,14 +93,23 @@
 
 	</script>
 	<style type="text/css">
+		.body {
+			height: 100%;
+		}
 		.mouseBox {
 			float: left;
 			background-color: gray;
+		}
+		.mouseBoxWrapper {
+			margin: 0 auto;
+			margin-top: 10%;
+			background-color: blue;
+			/*overflow: hidden;*/
 		}
 
 	</style>
 </head>
 <body>
-	<div></div>
+	<div class="mouseBoxWrapper"></div>
 </body>
 </html>
