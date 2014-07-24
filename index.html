@@ -11,7 +11,7 @@
 				var wrapperHeight = $(window).height()/2;
 				var wrapperWidth = $(window).width()/2;
 				var rows = Math.floor((wrapperHeight + sideLen/2) / sideLen);
-				var columns = Math.floor((wrapperWidth + sideLen/2) / sideLen);
+				var columns = Math.floor((wrapperWidth) / sideLen);
 				console.log("row " + rows + " " + columns)
 				var bodyString = "";
 				for(var i = 0; i < rows; i++){
@@ -95,10 +95,13 @@
 			height: 100%;
 		}
 		.mouseBox {
-			float: left;
+			display:inline-block;
+
 			background-color: gray;
 		}
 		.mouseBoxWrapper {
+			vertical-align: middle;
+			text-align: center;
 			margin: 0 auto;
 			margin-top: 10%;
 			background-color: blue;
