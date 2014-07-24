@@ -5,48 +5,54 @@
 	<script src="js/jquery.js"></script>
 	<script>
 		$(document).ready(function(){
-			var bodyString = "";
-			var rows = 5;
-			var columns = 5;
+
+
 			var sideLen = 100;
+
+			var rows = Math.floor(($(".mouseBoxWrapper").height() + sideLen/2) / sideLen);
+			var columns = Math.floor( ($(".mouseBoxWrapper").width() + sideLen/2) / sideLen);
+
+			console.log("row " + rows + " " + columns)
+
+
+			var bodyString = "";
 			for(var i = 0; i < rows; i++){
 				for(var j = 0; j < columns; j++){
 					bodyString += "<div class=\"mouseBox row-"+i+" col-"+j+"\"></div>";
 				}
 			} 
 
-
-			$(".row-2.col-6")
-
 			//Appending the string to the document
-			$("body").html(bodyString);
+			$(".mouseBoxWrapper").html(bodyString);
 			$(".mouseBox").css("height", sideLen).css("width", sideLen);
 
 			//Storing the information
 			var initialX = [];
 			var initialY = [];
+			var radius = sideLen / 2;
+
 			$(".mouseBox").each(function(index) {
 				var offset = $(this).offset();
-				initialX[index] = offset.left;
-				initialY[index] = offset.top;
+				initialX[index] = offset.left + sideLen / 2;
+				initialY[index] = offset.top + sideLen / 2;
 			});
 
+			$(".mouseBox").css("margin", 2);
 			//Storing the objects
 			// for(var i = 0$(".mouseBox");
+			var initial = true;
 			$(document).mousemove(function(e){
+				if(initial) {
+					$(".mouseBox").css("margin", 0);
+					initial = false;
+				}
 				$(".mouseBox").each(function(index){
-					// if(e.pageX % 2 == 0) return;
-					// if(e.pageY % 2 == 0) return;
-
 					var newX, newY;
-					var radius = sideLen / 2;
-					var oldX = initialX[index] + radius;
-					var oldY = initialY[index] + radius;
+					var oldX = initialX[index];
+					var oldY = initialY[index];
 
 					var xDiff = oldX - e.pageX;
 					var yDiff = oldY - e.pageY;
-
-
 
 					//Getting the diff
 					var xPos = 1;
@@ -78,14 +84,25 @@
 
 	</script>
 	<style type="text/css">
+		.body {
+			height: 100%;
+		}
 		.mouseBox {
 			float: left;
 			background-color: gray;
+		}
+		.mouseBoxWrapper {
+			width: 80%;
+			height: 500px;
+			margin: 0 auto;
+			margin-top: 10%;
+			background-color: blue;
+			/*overflow: hidden;*/
 		}
 
 	</style>
 </head>
 <body>
-	<div></div>
+	<div class="mouseBoxWrapper"></div>
 </body>
 </html>
