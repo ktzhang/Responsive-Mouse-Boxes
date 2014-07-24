@@ -12,7 +12,8 @@
 				var wrapperWidth = $(window).width()/2;
 				var rows = Math.floor((wrapperHeight + sideLen/2) / sideLen);
 				var columns = Math.floor((wrapperWidth) / sideLen);
-				console.log("row " + rows + " " + columns)
+
+				//Adding div items into the body
 				var bodyString = "";
 				for(var i = 0; i < rows; i++){
 					for(var j = 0; j < columns; j++){
@@ -21,7 +22,7 @@
 				} 
 
 				//Appending the string to the document
-				$(".mouseBoxWrapper").html(bodyString).height(wrapperHeight).width(wrapperWidth);
+				$(".mouseBoxWrapper").html(bodyString).height(wrapperHeight).width(wrapperWidth).css("margin-top", -wrapperHeight/2).css("margin-left", -wrapperWidth/2);
 				$(".mouseBox").css("height", sideLen).css("width", sideLen);
 
 				//Storing the information
@@ -35,7 +36,8 @@
 					initialY[index] = offset.top + sideLen / 2;
 				});
 
-				$(".mouseBox").css("margin", 2);
+				//adding margins
+				$(".mouseBox").css("margin-top", -4);
 
 
 				//Binding mousemove events
@@ -96,14 +98,17 @@
 		}
 		.mouseBox {
 			display:inline-block;
-
+			margin-top:-2px;
+			/*margin: 2px;*/
 			background-color: gray;
 		}
 		.mouseBoxWrapper {
 			vertical-align: middle;
+			position: absolute;
 			text-align: center;
 			margin: 0 auto;
-			margin-top: 10%;
+			top:50%;
+			left:50%;
 			background-color: blue;
 			/*overflow: hidden;*/
 		}
