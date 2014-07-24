@@ -6,20 +6,21 @@
 	<script>
 		$(document).ready(function(){
 			var bodyString = "";
-			var rows = 8;
-			var columns = 8;
+			var rows = 5;
+			var columns = 5;
+			var sideLen = 100;
 			for(var i = 0; i < rows; i++){
-				bodyString += "<div class=\"rowBox row-"+i+"\">";
 				for(var j = 0; j < columns; j++){
 					bodyString += "<div class=\"mouseBox row-"+i+" col-"+j+"\"></div>";
 				}
-				bodyString += "</div>";
 			} 
+
 
 			$(".row-2.col-6")
 
 			//Appending the string to the document
 			$("body").html(bodyString);
+			$(".mouseBox").css("height", sideLen).css("width", sideLen);
 
 			//Storing the information
 			var initialX = [];
@@ -38,8 +39,9 @@
 					// if(e.pageY % 2 == 0) return;
 
 					var newX, newY;
-					var oldX = initialX[index] + 50;
-					var oldY = initialY[index] + 50;
+					var radius = sideLen / 2;
+					var oldX = initialX[index] + radius;
+					var oldY = initialY[index] + radius;
 
 					var xDiff = oldX - e.pageX;
 					var yDiff = oldY - e.pageY;
@@ -59,31 +61,15 @@
 						yDiff *= -1;
 					}
 
-	
-
-
-					//Getting
-					
-
-					// console.log(xPos +  " " + xDiff + " " + yPos + " " + yDiff);
 					var distX = Math.sqrt(xDiff);
 					var distY = Math.sqrt(yDiff);
 
-					newX = oldX + (distX* xPos) - 50;
-					newY = oldY + (distY* yPos) - 50;
+					newX = oldX + (distX* xPos) - radius;
+					newY = oldY + (distY* yPos) - radius;
 
-					// if($(this).is(".row-2.col-6")) {
-
-
-					// console.log((distX * xPos / 3) + " " + (distY * yPos / 3));
-					// }
-					// console.log(newX + " " + newY);
-					// $(this).css("position", "absolute");
 					$(this).offset({top: newY, left: newX});
 				});
-   			// e.pageX - gives you X position
-   				// e.pageY - gives you Y position
-   				// console.log("x= " + e.pageX);
+ 
 			});
 
 		});
@@ -93,12 +79,8 @@
 	</script>
 	<style type="text/css">
 		.mouseBox {
-			width: 100px;
-			height: 100px;
-			margin: 10px;
 			float: left;
-			background-color: yellow;
-			border: solid 1px black;
+			background-color: gray;
 		}
 
 	</style>
