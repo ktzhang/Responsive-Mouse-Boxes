@@ -34,20 +34,19 @@
 			// for(var i = 0$(".mouseBox");
 			$(document).mousemove(function(e){
 				$(".mouseBox").each(function(index){
-					if(e.pageX % 2 == 0) return;
+					// if(e.pageX % 2 == 0) return;
+					// if(e.pageY % 2 == 0) return;
+
 					var newX, newY;
-					var oldX = initialX[index];
-					var oldY = initialY[index];
+					var oldX = initialX[index] + 50;
+					var oldY = initialY[index] + 50;
 
 					var xDiff = oldX - e.pageX;
 					var yDiff = oldY - e.pageY;
 
-					//Squaring the numbers
-					xDiff *= xDiff;
-					yDiff *= yDiff;
 
 
-					//Getting
+					//Getting the diff
 					var xPos = 1;
 					if(xDiff < 0) {
 						xPos = -1;
@@ -55,26 +54,32 @@
 					}
 
 					var yPos = 1;
-					if(yPos < 0) {
+					if(yDiff < 0) {
 						yPos = -1;
 						yDiff *= -1;
 					}
 
+	
+
+
+					//Getting
+					
+
+					// console.log(xPos +  " " + xDiff + " " + yPos + " " + yDiff);
 					var distX = Math.sqrt(xDiff);
 					var distY = Math.sqrt(yDiff);
-					// console.log(distX + " " + distY);
 
-					newX = oldX + (distX * xPos / 3);
-					newY = oldY + (distY * yPos / 3);
+					newX = oldX + (distX* xPos) - 50;
+					newY = oldY + (distY* yPos) - 50;
 
-					if($(this).is(".row-2.col-6")) {
+					// if($(this).is(".row-2.col-6")) {
 
 
-						console.log(newX + " " + newY);
-					}
+					// console.log((distX * xPos / 3) + " " + (distY * yPos / 3));
+					// }
 					// console.log(newX + " " + newY);
 					// $(this).css("position", "absolute");
-					// $(this).offset({top: newY, left: newX});
+					$(this).offset({top: newY, left: newX});
 				});
    			// e.pageX - gives you X position
    				// e.pageY - gives you Y position
