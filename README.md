@@ -1,2 +1,2 @@
 Responsive Mouse Boxes!
-When the boxes around the webpage move based on mouse position.
+When your mouse pointer moves, the boxes will move around the mouse. Built using jQuery.

@@ -5,8 +5,7 @@
 	<script src="js/jquery.js"></script>
 	<script>
 		$(document).ready(function(){
-
-			var sideLen = 50;
+			var sideLen = 70;
 			function resetLayout() {
 				var wrapperHeight = $(window).height()/2;
 				var wrapperWidth = $(window).width()/2;
@@ -74,22 +73,19 @@
 						newX = oldX + (distX* xPos) - radius;
 						newY = oldY + (distY* yPos) - radius;
 
+
+						// $(this).css("box-shadow", "-1px -1px 1px 1px black");
+
 						$(this).offset({top: newY, left: newX});
 					});
 	 
 				});
 			}
-
 			resetLayout();
-
 	  		$(window).resize(function() {
 				resetLayout();
 		  	});			
-			
-
 		});
-
-			
 
 	</script>
 	<style type="text/css">
